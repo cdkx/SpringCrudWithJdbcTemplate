@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      file: changes/001-create-book-table.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/002-insert-initial-books.yaml
+      relativeToChangelogFile: true
