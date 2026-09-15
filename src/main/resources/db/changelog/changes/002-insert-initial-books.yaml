@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-initial-books
+      author: ru.eremin
+
+      changes:
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: title
+                  value: "Война и мир"
+
+              - column:
+                  name: author
+                  value: "Лев Толстой"
+
+              - column:
+                  name: publication_year
+                  valueNumeric: 1869
+
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: title
+                  value: "Преступление и наказание"
+
+              - column:
+                  name: author
+                  value: "Фёдор Достоевский"
+
+              - column:
+                  name: publication_year
+                  valueNumeric: 1866
+
+      rollback:
+        - delete:
+            tableName: book
+            where: "title = 'Война и мир' AND author = 'Лев Толстой'"
+
+        - delete:
+            tableName: book
+            where: "title = 'Преступление и наказание' AND author = 'Фёдор Достоевский'"

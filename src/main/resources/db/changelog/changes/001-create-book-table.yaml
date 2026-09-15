@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-book-table
+      author: ru.eremin
+
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: book
+
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: author
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: publication_year
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+
+        - sql:
+            sql: >
+              ALTER TABLE book
+              ADD CONSTRAINT chk_book_publication_year
+              CHECK (publication_year > 0);
+
+      rollback:
+        - dropTable:
+            tableName: book
