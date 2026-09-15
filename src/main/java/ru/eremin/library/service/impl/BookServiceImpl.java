@@ -32,7 +32,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public BookDto findById(long id) {
+    public BookDto findById(Long id) {
         return bookRepository.findById(id)
                 .map(bookMapper::toDto)
                 .orElseThrow(() -> new BookNotFoundException(id));
@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto update(long id, BookUpdateRequest request) {
+    public BookDto update(Long id, BookUpdateRequest request) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
 
@@ -59,7 +59,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         boolean deleted = bookRepository.deleteById(id);
 
         if (!deleted) {

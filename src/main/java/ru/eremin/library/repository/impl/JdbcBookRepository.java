@@ -53,7 +53,7 @@ public class JdbcBookRepository implements BookRepository {
     }
 
     @Override
-    public Optional<Book> findById(long id) {
+    public Optional<Book> findById(Long id) {
         List<Book> result = jdbcTemplate.query(FIND_BY_ID_SQL, BOOK_ROW_MAPPER, id);
         return DataAccessUtils.optionalResult(result);
     }
@@ -121,7 +121,7 @@ public class JdbcBookRepository implements BookRepository {
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteById(Long id) {
         int deletedRows = jdbcTemplate.update(DELETE_SQL, id);
         return deletedRows > 0;
     }

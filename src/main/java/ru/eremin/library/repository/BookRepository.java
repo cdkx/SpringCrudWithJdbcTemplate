@@ -10,9 +10,9 @@ public interface BookRepository {
 
     List<Book> findAll();
 
-    Optional<Book> findById(long id);
+    Optional<Book> findById(Long id);
 
     Book save(Book book);
 
-    boolean deleteById(long id);
+    boolean deleteById(Long id);
 }
