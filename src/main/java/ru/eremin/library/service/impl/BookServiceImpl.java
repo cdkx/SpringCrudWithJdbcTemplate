@@ -1,6 +1,7 @@
 package ru.eremin.library.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.eremin.library.dto.BookCreateRequest;
@@ -16,13 +17,13 @@ import java.util.List;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<BookDto> findAll() {
         return bookRepository.findAll()
                 .stream()
@@ -30,25 +31,25 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public BookDto findById(long id) {
+    @Transactional(readOnly = true)
+    public BookDto findById(Long id) {
         return bookRepository.findById(id)
                 .map(bookMapper::toDto)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public BookDto create(BookCreateRequest request) {
         Book book = bookMapper.toEntity(request);
         Book savedBook = bookRepository.save(book);
         return bookMapper.toDto(savedBook);
     }
 
-    @Transactional
     @Override
-    public BookDto update(long id, BookUpdateRequest request) {
+    @Transactional
+    public BookDto update(Long id, BookUpdateRequest request) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
 
@@ -57,9 +58,9 @@ public class BookServiceImpl implements BookService {
         return bookMapper.toDto(updatedBook);
     }
 
-    @Transactional
     @Override
-    public void delete(long id) {
+    @Transactional
+    public void delete(Long id) {
         boolean deleted = bookRepository.deleteById(id);
 
         if (!deleted) {
