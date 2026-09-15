@@ -1,6 +1,5 @@
 package ru.eremin.library.service.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +21,8 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public List<BookDto> findAll() {
         return bookRepository.findAll()
                 .stream()
@@ -31,24 +30,24 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public BookDto findById(Long id) {
         return bookRepository.findById(id)
                 .map(bookMapper::toDto)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }
 
-    @Override
     @Transactional
+    @Override
     public BookDto create(BookCreateRequest request) {
         Book book = bookMapper.toEntity(request);
         Book savedBook = bookRepository.save(book);
         return bookMapper.toDto(savedBook);
     }
 
-    @Override
     @Transactional
+    @Override
     public BookDto update(Long id, BookUpdateRequest request) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
@@ -58,8 +57,8 @@ public class BookServiceImpl implements BookService {
         return bookMapper.toDto(updatedBook);
     }
 
-    @Override
     @Transactional
+    @Override
     public void delete(Long id) {
         boolean deleted = bookRepository.deleteById(id);
 
